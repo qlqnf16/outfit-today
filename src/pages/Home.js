@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { weatherApis } from "../api";
 
 import WeatherInfo from "../components/WeatherInfo";
-import { async } from "q";
+import { async, promised } from "q";
 
 const Container = styled.div`
   text-align: center;
@@ -22,21 +22,17 @@ const Home = () => {
     minTemp: 0,
     maxTemp: 0
   });
-  const [geolocation, setGeolocation] = useState({
-    lon: null,
-    lan: null
-  });
   const [loading, setLoading] = useState(true);
 
   const getCurrentWeather = async position => {
     let lon = position.coords.longitude;
     let lat = position.coords.latitude;
     try {
-      const { data: main } = await weatherApis.currentWeather(lon, lat);
+      let [{ data: main }, { data }] = await Promise.all([
+        weatherApis.currentWeather(lon, lat),
+        weatherApis.weatherForecast(lon, lat, 6)
+      ]);
       setWeather(main);
-
-      const { data } = await weatherApis.weatherForecast(lon, lat, 6);
-      console.log(data);
       const templist = [];
       data.list.forEach(result => {
         templist.push(result.main.temp);
