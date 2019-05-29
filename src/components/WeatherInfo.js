@@ -3,15 +3,53 @@ import "../config/css/weather-icons.css";
 import styled from "styled-components";
 
 const KetoCe = kelvin => {
-  return (kelvin - 273.15).toFixed(1);
+  return (kelvin - 273.15).toFixed(0);
 };
-
-const Icon = styled.i`
-  font-size: 300px;
-`;
 
 const FlexContainer = styled.div`
   display: flex;
+  justify-content: center;
+`;
+
+const Icon = styled.i`
+  font-size: 200px;
+  margin-right: 25px;
+`;
+
+const WeatherInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ContentText = styled.div`
+  display: flex;
+  align-itmes: center;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #7b7b7b;
+`;
+
+const Temperature = styled.div`
+  display: flex;
+  justify-content: start;
+  font-size: 5rem;
+  font-weight: 700;
+`;
+
+const RegularSpan = styled.span`
+  font-weight: 400;
+  font-size: 3rem;
+  margin-top: 15px;
+`;
+
+const Blue = styled.span`
+  color: #32a1ff;
+`;
+
+const Red = styled.span`
+  color: #f53f3c;
 `;
 
 const WeatherInfo = props => {
@@ -30,12 +68,20 @@ const WeatherInfo = props => {
   return (
     <FlexContainer>
       <Icon className={`wi ${weatherIcon}`} />
-      <div>
-        <h1>{props.weather.name}의 날씨</h1>
-        <h2>현재 기온: {KetoCe(props.weather.main.temp)}℃</h2>
-        <h2>최고 기온: {KetoCe(props.forecast.maxTemp)}℃</h2>
-        <h2>최저 기온: {KetoCe(props.forecast.minTemp)}℃</h2>
-      </div>
+      <WeatherInfoContainer>
+        <ContentText>
+          <i className="material-icons">location_on</i>
+          {props.weather.name}
+        </ContentText>
+        <Temperature>
+          {KetoCe(props.weather.main.temp)}
+          <RegularSpan>℃</RegularSpan>
+        </Temperature>
+        <ContentText>
+          <Red>{KetoCe(props.forecast.maxTemp)}℃</Red> /{" "}
+          <Blue>{KetoCe(props.forecast.minTemp)}℃</Blue>
+        </ContentText>
+      </WeatherInfoContainer>
     </FlexContainer>
   );
 };

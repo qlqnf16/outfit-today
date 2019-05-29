@@ -4,6 +4,10 @@ import { weatherApis } from "../api";
 
 import WeatherInfo from "../components/WeatherInfo";
 
+const Container = styled.div`
+  text-align: center;
+`;
+
 const Title = styled.div`
   width: fit-content;
   font-size: 2.5rem;
@@ -45,10 +49,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
       <Title>👖👚오늘 뭐 입지?</Title>
       {!loading ? <WeatherInfo weather={weather} forecast={forecast} /> : <></>}
-    </div>
+    </Container>
   );
 };
 
