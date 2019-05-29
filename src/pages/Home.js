@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { weatherApis } from "../api";
 
 import WeatherInfo from "../components/WeatherInfo";
+import { async } from "q";
 
 const Container = styled.div`
   text-align: center;
@@ -21,11 +22,17 @@ const Home = () => {
     minTemp: 0,
     maxTemp: 0
   });
+  const [geolocation, setGeolocation] = useState({
+    lon: null,
+    lan: null
+  });
   const [loading, setLoading] = useState(true);
 
-  const getCurrentWeather = async () => {
+  const getCurrentWeather = async position => {
+    let lon = position.coords.longitude;
+    let lat = position.coords.latitude;
     try {
-      const { data: main } = await weatherApis.currentWeather("Seoul");
+      const { data: main } = await weatherApis.currentWeather(lon, lat);
       setWeather(main);
 
       const { data } = await weatherApis.weatherForecast("Seoul", 6);
@@ -45,7 +52,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getCurrentWeather();
+    navigator.geolocation.getCurrentPosition(getCurrentWeather, error =>
+      console.log(error)
+    );
   }, []);
 
   return (
