@@ -35,7 +35,8 @@ const Home = () => {
       const { data: main } = await weatherApis.currentWeather(lon, lat);
       setWeather(main);
 
-      const { data } = await weatherApis.weatherForecast("Seoul", 6);
+      const { data } = await weatherApis.weatherForecast(lon, lat, 6);
+      console.log(data);
       const templist = [];
       data.list.forEach(result => {
         templist.push(result.main.temp);

@@ -8,6 +8,6 @@ const weatherApiBase = axios.create({
 export const weatherApis = {
   currentWeather: (lon, lat) =>
     weatherApiBase.get("weather", { params: { lon, lat } }),
-  weatherForecast: (q, cnt) =>
-    weatherApiBase.get("forecast", { params: { q, cnt } })
+  weatherForecast: (lon, lat, cnt) =>
+    weatherApiBase.get("forecast", { params: { lon, lat, cnt } })
 };
