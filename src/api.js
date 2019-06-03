@@ -11,3 +11,21 @@ export const weatherApis = {
   weatherForecast: (lon, lat, cnt) =>
     weatherApiBase.get("forecast", { params: { lon, lat, cnt } })
 };
+
+const kakaoApiBase = axios.create({
+  baseURL: "https://dapi.kakao.com",
+  headers: {
+    Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}`
+  }
+});
+
+export const kakaoApis = {
+  geoCode: (x, y) =>
+    kakaoApiBase.get("/v2/local/geo/coord2regioncode.json", {
+      params: {
+        x,
+        y,
+        output_coord: "TM"
+      }
+    })
+};

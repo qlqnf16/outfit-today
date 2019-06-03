@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { weatherApis } from "../api";
+import { weatherApis, kakaoApis } from "../api";
 
 import WeatherInfo from "../components/WeatherInfo";
 import Clothing from "../components/Clothing";
@@ -77,11 +77,17 @@ const Home = () => {
     });
   };
 
+  const getTM = async (lon, lat) => {
+    let { data } = await kakaoApis.geoCode(lon, lat);
+    console.log(data.documents[0]);
+  };
+
   const successHandler = async position => {
     let lon = position.coords.longitude;
     let lat = position.coords.latitude;
     try {
-      await getCurrentWeather(lon, lat);
+      getCurrentWeather(lon, lat);
+      getTM(lon, lat);
     } catch (error) {
       console.log(`error: ${error}`);
     } finally {
@@ -103,7 +109,7 @@ const Home = () => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {
-      timeout: 5000
+      timeout: 10000
     });
   }, []);
 
