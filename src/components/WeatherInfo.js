@@ -7,7 +7,7 @@ const KetoCe = kelvin => {
 };
 
 const FlexContainer = styled.div`
-  display: flex;
+  display: inline-flex;
   justify-content: center;
 `;
 
