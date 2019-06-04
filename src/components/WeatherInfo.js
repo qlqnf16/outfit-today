@@ -12,7 +12,7 @@ const FlexContainer = styled.div`
 `;
 
 const Icon = styled.i`
-  font-size: 200px;
+  font-size: 150px;
   margin-right: 25px;
 `;
 
@@ -25,7 +25,7 @@ const WeatherInfoContainer = styled.div`
 
 const ContentText = styled.div`
   display: flex;
-  align-itmes: center;
+  align-items: center;
   font-size: 1rem;
   font-weight: 300;
   color: #7b7b7b;
@@ -71,7 +71,7 @@ const WeatherInfo = props => {
       <WeatherInfoContainer>
         <ContentText>
           <i className="material-icons">location_on</i>
-          {props.weather.name}
+          {props.location}
         </ContentText>
         <Temperature>
           {KetoCe(props.weather.main.temp)}

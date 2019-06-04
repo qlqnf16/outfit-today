@@ -29,8 +29,8 @@ const Clothing = props => {
 
   const current_temp = props.weather.main.temp - 273.15;
   let clothing;
-  if (current_temp >= 27) clothing = `나시티, 반바지, 민소매 원피스`;
-  else if (current_temp >= 23 && current_temp < 27)
+  if (current_temp >= 28) clothing = `나시티, 반바지`;
+  else if (current_temp >= 23 && current_temp < 28)
     clothing = `반팔, 얇은 셔츠, 얇은 긴팔`;
   else if (current_temp >= 20 && current_temp < 23)
     clothing = `긴팔, 가디건, 후드티`;
@@ -45,7 +45,7 @@ const Clothing = props => {
 
   const minTemp = parseInt((props.forecast.minTemp - 273.15).toFixed(0));
   let minTempComment;
-  if (minTemp <= 21 && minTemp > 15) minTempComment = `가디건`;
+  if (minTemp < 20 && minTemp > 15) minTempComment = `가디건`;
   else if (minTemp <= 15 && minTemp > 6) minTempComment = `자켓`;
   else if (minTemp <= 6) minTempComment = `패딩`;
 
@@ -54,7 +54,9 @@ const Clothing = props => {
       <MainContent>{clothing}</MainContent>
       <Content>
         <div>
-          최저기온 {minTemp}℃! <b>{minTempComment}</b>을 챙기세요
+          {minTemp < 20
+            ? `최저기온 ${minTemp}℃! <b>{minTempComment}</b>을 챙기세요`
+            : ``}
         </div>
         <div>{rainyContent}</div>
       </Content>

@@ -29,3 +29,32 @@ export const kakaoApis = {
       }
     })
 };
+
+// CORS ISSUE 발생, 서버 필요
+const airKoreaApiBase = axios.create({
+  baseURL: "http://openapi.airkorea.or.kr/openapi/services/rest/",
+  headers: {
+    "Access-Control-Allow-Origin": "*"
+  },
+  params: {
+    serviceKey: process.env.REACT_APP_AIR_KOREA_KEY,
+    _returnType: "json"
+  }
+});
+
+export const airKoreaApis = {
+  findNearStation: (tmX, tmY) =>
+    airKoreaApiBase.get("MsrstnInfoInqireSvc/getNearbyMsrstnList", {
+      params: {
+        tmX,
+        tmY
+      }
+    }),
+  airCondition: stationName =>
+    airKoreaApiBase.get("ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty", {
+      params: {
+        stationName,
+        dataTerm: "DAILY"
+      }
+    })
+};

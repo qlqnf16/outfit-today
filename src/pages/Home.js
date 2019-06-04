@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { weatherApis, kakaoApis } from "../api";
+import { weatherApis, kakaoApis, airKoreaApis } from "../api";
 
 import WeatherInfo from "../components/WeatherInfo";
 import Clothing from "../components/Clothing";
@@ -21,7 +21,7 @@ const ContentContainer = styled.div`
 `;
 
 const Line = styled.div`
-  height: 15px;
+  height: 2.5rem;
   @media (min-width: 1080px) {
     margin: 0 60px;
     height: 200px;
@@ -43,7 +43,7 @@ const StyledLink = styled.a`
 `;
 
 const LinkContainer = styled.div`
-  margin-top: 3rem;
+  margin-top: 7rem;
   @media (min-width: 1080px) {
     margin-top: 15rem;
   }
@@ -56,6 +56,7 @@ const Home = () => {
     maxTemp: 0,
     rain: false
   });
+  const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const getCurrentWeather = async (lon, lat) => {
@@ -79,7 +80,12 @@ const Home = () => {
 
   const getTM = async (lon, lat) => {
     let { data } = await kakaoApis.geoCode(lon, lat);
-    console.log(data.documents[0]);
+    let temp_location = data.documents[0].address_name.split(" ");
+    setLocation(temp_location[temp_location.length - 1]);
+    let x = data.documents[0].x;
+    let y = data.documents[0].y;
+    let result = await airKoreaApis.findNearStation(x, y);
+    console.log("result: " + result);
   };
 
   const successHandler = async position => {
@@ -119,7 +125,11 @@ const Home = () => {
     else {
       info = (
         <ContentContainer>
-          <WeatherInfo weather={weather} forecast={forecast} />
+          <WeatherInfo
+            weather={weather}
+            forecast={forecast}
+            location={location}
+          />
           {}
           <Line />
           <Clothing weather={weather} forecast={forecast} />
