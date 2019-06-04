@@ -4,8 +4,11 @@ import styled from "styled-components";
 const Container = styled.div``;
 
 const MainContent = styled.div`
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  @media (min-width: 1080px) {
+    font-size: 2rem;
+  }
 `;
 
 const Content = styled.div`

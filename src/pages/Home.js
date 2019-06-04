@@ -56,7 +56,7 @@ const Home = () => {
     maxTemp: 0,
     rain: false
   });
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState("서울시");
   const [loading, setLoading] = useState(true);
 
   const getCurrentWeather = async (lon, lat) => {
